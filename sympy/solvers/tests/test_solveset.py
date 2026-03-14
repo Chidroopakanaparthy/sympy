@@ -3595,3 +3595,12 @@ def test_issue_26077():
         Complement(S.Reals, excluded_points)
     )
     assert solution.as_dummy() == critical_points.as_dummy()
+
+def test_issue_19639():
+    """Verify that unrad returning None doesn't crash solveset."""
+    from sympy import symbols, sqrt, integrate, pi
+    r, a, b = symbols('r a b', real=True)
+    f = sqrt(1 - r**2)*(a*r**3 + b*r**4)
+    # The fix should allow this to return without a TypeError
+    ans = integrate(f, (r, 0, 1))
+    assert ans.expand() == (2*a/15 + pi*b/32).expand()
