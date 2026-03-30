@@ -1091,7 +1091,7 @@ def _solve_as_poly(f, symbol, domain=S.Complexes):
 def _solve_radical(f, unradf, symbol, solveset_solver):
     """ Helper function to solve equations with radicals """
     res = unradf
-    eq, cov = res if res is not None else (f, [])
+    eq, cov = res if res else (f, [])
     if not cov:
         result = solveset_solver(eq, symbol) - \
             Union(*[solveset_solver(g, symbol) for g in denoms(f, symbol)])
